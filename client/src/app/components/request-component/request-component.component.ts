@@ -9,17 +9,20 @@ import { OnInit, Component } from '@angular/core';
 export class RequestComponent implements OnInit {
     name = '';
     startDate = '';
+    result: any;
     constructor(private request:RequestService) { }
 
     ngOnInit() {
-    this.request.baseCurrency = 'USD';
-    this.request.startDate = '2018-01-01'
-    this.request.getData();
     }
 
-    ngOnSubmit() {
+    onSubmit() {
         this.request.baseCurrency = this.name;
         this.request.startDate = this.startDate;
-        this.request.getData();
+        this.request.getData().subscribe(
+            data => {
+                console.log(data)
+                this.result = data;
+            }
+        );
     }
 }

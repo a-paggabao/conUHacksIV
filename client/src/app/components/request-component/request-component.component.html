@@ -1,6 +1,6 @@
 <div class="container">
     <h1>Request Form</h1>
-    <form>
+    <form (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="name">Base Currency</label>
         <input type="text" class="form-control" id="baseCurrency" 
@@ -17,3 +17,4 @@
  
     </form>
 </div>
+<div *ngIf="result">{{ result.base }}</div>
