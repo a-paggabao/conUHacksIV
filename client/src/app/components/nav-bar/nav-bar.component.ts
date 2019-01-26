@@ -11,8 +11,8 @@ export class NavBarComponent implements OnInit {
   constructor(private request:RequestService) { }
 
   ngOnInit() {
-    this.request.base_currency = 'USD';
-    this.request.start_date = '2018-01-01'
+    this.request.baseCurrency = 'USD';
+    this.request.startDate = '2018-01-01'
     this.request.getData();
   }
 }
