@@ -5,26 +5,38 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
-import { MatToolbarModule, MatIconModule, MatSidenavModule, MatDatepickerModule, MatFormFieldModule, MatButtonModule } from "@angular/material";
-import { FormsModule } from '@angular/forms';
-import { MapComponent } from './components/map/map.component';
-import { MatCardModule } from '@angular/material';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  MatToolbarModule,
+  MatIconModule,
+  MatSidenavModule,
+  MatDatepickerModule,
+  MatFormFieldModule,
+  MatButtonModule
+} from "@angular/material";
+import { FormsModule } from "@angular/forms";
+import { MapComponent } from "./components/map/map.component";
+import { MatCardModule } from "@angular/material";
+import { HttpClientModule } from "@angular/common/http";
 
-import { D3Service, D3_DIRECTIVES } from './d3';
+import { D3Service, D3_DIRECTIVES } from "./d3";
 
-import { GraphComponent } from './visuals/graph/graph.component';
-import { SHARED_VISUALS } from './visuals/shared';
-import { BallsComponent } from './components/balls/balls.component';
-import { BaseCurrencyComponent } from './components/base-currency/base-currency.component';
+import { GraphComponent } from "./visuals/graph/graph.component";
+import { SHARED_VISUALS } from "./visuals/shared";
+import { BallsComponent } from "./components/balls/balls.component";
+import { BaseCurrencyComponent } from "./components/base-currency/base-currency.component";
 
 @NgModule({
-  declarations: [AppComponent,
+  declarations: [
+    AppComponent,
     GraphComponent,
     BallsComponent,
     ...SHARED_VISUALS,
     ...D3_DIRECTIVES,
-    BaseCurrencyComponent,AppComponent, DashboardComponent, MapComponent],
+    BaseCurrencyComponent,
+    AppComponent,
+    DashboardComponent,
+    MapComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -36,9 +48,6 @@ import { BaseCurrencyComponent } from './components/base-currency/base-currency.
     MatDatepickerModule,
     MatFormFieldModule,
     MatButtonModule,
-    
-    BrowserModule,
-    FormsModule,
     HttpClientModule,
     MatCardModule
   ],
