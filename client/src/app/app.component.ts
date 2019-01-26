@@ -7,7 +7,6 @@ import { Node, Link } from './d3';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-
 export class AppComponent {
   nodes: Node[] = [];
   links: Link[] = [];
