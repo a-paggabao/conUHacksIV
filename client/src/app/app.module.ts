@@ -8,13 +8,15 @@ import { D3Service, D3_DIRECTIVES } from './d3';
 import { AppComponent } from './app.component';
 import { GraphComponent } from './visuals/graph/graph.component';
 import { SHARED_VISUALS } from './visuals/shared';
+import { BallsComponent } from './components/balls/balls.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GraphComponent,
+    BallsComponent,
     ...SHARED_VISUALS,
-    ...D3_DIRECTIVES
+    ...D3_DIRECTIVES,
   ],
   imports: [
     BrowserModule,
