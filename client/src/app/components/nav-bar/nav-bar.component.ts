@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RequestService } from 'src/app/service/request.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavBarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private request:RequestService) { }
 
   ngOnInit() {
+    this.request.base_currency = 'USD';
+    this.request.start_date = '2018-01-01'
+    this.request.getData();
   }
-
 }
