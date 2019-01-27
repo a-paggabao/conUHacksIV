@@ -1,4 +1,9 @@
 <!-- <app-balls></app-balls> -->
 <!-- <app-base-currency></app-base-currency> -->
-
+<mat-toolbar color="primary" style="height: 5vh;">
+  <a [routerLink]="['/map']" routerLinkActive="router-link-active">
+    <mat-icon class="icon">person_pin_circle</mat-icon>
+    <span>Pretty </span><mat-icon>euro_symbol</mat-icon><span>urrency</span>
+  </a>
+</mat-toolbar>
 <router-outlet></router-outlet>
