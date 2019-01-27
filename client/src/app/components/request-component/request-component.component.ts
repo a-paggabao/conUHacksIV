@@ -6,8 +6,11 @@ import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { ActivatedRoute } from "@angular/router";
 import { rgb } from "@amcharts/amcharts4/.internal/core/utils/Colors";
 import { max } from '@amcharts/amcharts4/.internal/core/utils/Math';
+import am4themes_dark from "@amcharts/amcharts4/themes/amchartsdark"
+import { SUPPORTED_CURRENCIES } from 'src/app/supportedcurrencies.model';
 
 am4core.useTheme(am4themes_animated);
+am4core.useTheme(am4themes_dark);
 
 @Component({
   selector: "app-request-component",
@@ -23,44 +26,10 @@ export class RequestComponent implements OnInit {
   startDate = "";
   resultDate: string[] = [];
   resultCurrency: any[];
-  currencyKeys = [
-    "AUD",
-    "BGN",
-    "BRL",
-    "CAD",
-    "CHF",
-    "CNY",
-    "CZK",
-    "DKK",
-    "EUR",
-    "GBP",
-    "HKD",
-    "HRK",
-    "HUF",
-    "IDR",
-    "ILS",
-    "INR",
-    "ISK",
-    "JPY",
-    "KRW",
-    "MXN",
-    "MYR",
-    "NOK",
-    "NZD",
-    "PHP",
-    "PLN",
-    "PLN",
-    "RON",
-    "RUB",
-    "SEK",
-    "SGD",
-    "THB",
-    "TRY",
-    "USD",
-    "ZAR"
-  ];
   rowData = [];
   columnDefs = [];
+  currencyKeys: string[] = SUPPORTED_CURRENCIES
+
   ngOnDestroy() {
     this.zone.runOutsideAngular(() => {
       if (this.chart) {
@@ -103,6 +72,9 @@ export class RequestComponent implements OnInit {
       this.resultCurrency = stepCurrency;
       this.zone.runOutsideAngular(() => {
         let chart = am4core.create("chartdiv", am4charts.XYChart);
+        
+        chart.width = am4core.percent(100);
+        chart.height = am4core.percent(100);   
 
         chart.paddingRight = 20;
 
@@ -128,8 +100,8 @@ export class RequestComponent implements OnInit {
         let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
         dateAxis.renderer.grid.template.location = 0;
         dateAxis.tooltip.background.pointerLength = 4;
-        dateAxis.tooltip.background.fillOpacity = 1;
-        dateAxis.tooltip.background.fill = am4core.color("#666666");
+        dateAxis.tooltip.background.fillOpacity = 0;
+        dateAxis.tooltip.background.fill = am4core.color("#000000");
         dateAxis.tooltip.background.stroke = dateAxis.tooltip.background.fill;
 
         let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
@@ -145,11 +117,13 @@ export class RequestComponent implements OnInit {
         series.tooltip.background.fill = am4core.color("white");
         series.propertyFields.stroke = "color";
         chart.cursor = new am4charts.XYCursor();
-
+        
 
         let scrollbarX = new am4charts.XYChartScrollbar();
         scrollbarX.series.push(series);
         chart.scrollbarX = scrollbarX;
+
+        chart.background.opacity = 0;
 
         this.chart = chart;
         this.columnDefs = [
