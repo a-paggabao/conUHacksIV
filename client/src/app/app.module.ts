@@ -1,9 +1,3 @@
-import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
-
-import { AppRoutingModule } from "./app-routing.module";
-import { AppComponent } from "./app.component";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import {
   MatToolbarModule,
@@ -13,17 +7,21 @@ import {
   MatFormFieldModule,
   MatButtonModule
 } from "@angular/material";
-import { FormsModule } from "@angular/forms";
 import { MapComponent } from "./components/map/map.component";
 import { MatCardModule } from "@angular/material";
-import { HttpClientModule } from "@angular/common/http";
-
-import { D3Service, D3_DIRECTIVES } from "./d3";
-
-import { GraphComponent } from "./visuals/graph/graph.component";
-import { SHARED_VISUALS } from "./visuals/shared";
 import { BallsComponent } from "./components/balls/balls.component";
 import { BaseCurrencyComponent } from "./components/base-currency/base-currency.component";
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { D3Service, D3_DIRECTIVES } from './d3';
+import { AppComponent } from './app.component';
+import { GraphComponent } from './visuals/graph/graph.component';
+import { SHARED_VISUALS } from './visuals/shared';
+import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { RequestComponent } from './components/request-component/request-component.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +33,10 @@ import { BaseCurrencyComponent } from "./components/base-currency/base-currency.
     BaseCurrencyComponent,
     AppComponent,
     DashboardComponent,
-    MapComponent
+    MapComponent,
+    RequestComponent,
+    ...SHARED_VISUALS,
+    ...D3_DIRECTIVES,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +50,10 @@ import { BaseCurrencyComponent } from "./components/base-currency/base-currency.
     MatFormFieldModule,
     MatButtonModule,
     HttpClientModule,
-    MatCardModule
+    MatCardModule,
+    HttpClientModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
   ],
   providers: [D3Service],
   bootstrap: [AppComponent]
