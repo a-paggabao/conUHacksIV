@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from "@angular/core";
+import { Component, OnInit, NgZone, OnChanges, Inject } from "@angular/core";
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import * as am4maps from "@amcharts/amcharts4/maps";
@@ -6,6 +6,8 @@ import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
 import { Router } from "@angular/router";
 import { currencies, countries } from "country-data";
+import { MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { SUPPORTED_CURRENCIES } from 'src/app/supportedcurrencies.model';
 
 am4core.useTheme(am4themes_animated);
 
@@ -17,14 +19,13 @@ am4core.useTheme(am4themes_animated);
 export class MapComponent implements OnInit {
   private chart: am4maps.MapChart;
   public fade = false;
+  formValues: string[] = [];
+  valueSelected = false;
 
-  constructor(private zone: NgZone, private route: Router) {}
+  constructor(private zone: NgZone, private route: Router, public snackBar: MatSnackBar) {}
 
   ngOnInit() {
-  }
-
-  ngAfterViewInit() {
-    this.zone.runOutsideAngular(() => {
+    this.zone.runOutsideAngular(async () => {
       let chart = am4core.create("chartdiv", am4maps.MapChart);
 
       /* Set map definition */
@@ -50,26 +51,40 @@ export class MapComponent implements OnInit {
 
       let lastSelected;
       function fade(element) {
-        var op = 1;  // initial opacity
-        var timer = setInterval(function () {
-            if (op <= 0.1){
-                clearInterval(timer);
-                element.style.display = 'none';
-            }
-            element.style.opacity = op;
-            element.style.filter = 'alpha(opacity=' + op * 100 + ")";
-            op -= op * 0.1;
+        var op = 1; // initial opacity
+        var timer = setInterval(function() {
+          if (op <= 0.1) {
+            clearInterval(timer);
+            element.style.display = "none";
+          }
+          element.style.opacity = op;
+          element.style.filter = "alpha(opacity=" + op * 100 + ")";
+          op -= op * 0.1;
         }, 50);
-    }
+      }
 
       polygonTemplate.events.on("hit", ev => {
         let countryID = ev.target.dataItem.dataContext["id"];
-        console.log(this.getCurrencyCode(countryID))
+        let currencyID = this.getCurrencyCode(countryID);
+
+        if(!SUPPORTED_CURRENCIES.includes(currencyID) ) {
+          // alert("country not supported");
+          console.log(currencyID);
+          this.openSnackBar("country not supported yet...", "OK");
+          return;
+        }
+        console.log("here")
         if (lastSelected) {
           lastSelected.isActive = false;
         }
         // ev.target.series.chart.zoomToMapObject(ev.target);
-        // this.zone.run(() => this.route.navigate(['balls']));
+        this.formValues.push(currencyID);
+        this.valueSelected = true;
+        console.log(this.valueSelected);
+        if (this.formValues.length === 2) {
+          console.log(this.formValues);
+          this.zone.run(() => this.route.navigate([`linechart/${this.formValues[0]}/${this.formValues[1]}`]));
+        }
 
         if (lastSelected !== ev.target) {
           lastSelected = ev.target;
@@ -116,6 +131,12 @@ export class MapComponent implements OnInit {
   }
 
   getCurrencyCode(countryID: string): string {
-    return countries[countryID].currencies[0]
+    return countries[countryID].currencies[0];
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 }
