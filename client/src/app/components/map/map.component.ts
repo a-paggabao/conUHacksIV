@@ -5,7 +5,7 @@ import * as am4maps from "@amcharts/amcharts4/maps";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
 import { Router } from "@angular/router";
-import { currencies, countries } from "country-data";
+import { countries } from "country-data";
 import { MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { SUPPORTED_CURRENCIES } from 'src/app/supportedcurrencies.model';
 
@@ -50,8 +50,8 @@ export class MapComponent implements OnInit {
       polygonTemplate.strokeOpacity = 0.5;
       polygonTemplate.fill = chart.colors.getIndex(0);
 
-      let lastSelected;
-      function fade(element) {
+      let lastSelected: any;
+      function fade(element:any) {
         var op = 1; // initial opacity
         var timer = setInterval(function() {
           if (op <= 0.1) {
@@ -65,8 +65,8 @@ export class MapComponent implements OnInit {
       }
 
       polygonTemplate.events.on("hit", ev => {
-        let countryID = ev.target.dataItem.dataContext["id"];
-        let currencyID = this.getCurrencyCode(countryID);
+        let countryID:any = (<any>ev.target.dataItem.dataContext)["id"];
+        let currencyID:any = this.getCurrencyCode(countryID);
 
         if(!SUPPORTED_CURRENCIES.includes(currencyID) ) {
           // alert("country not supported");
@@ -129,7 +129,7 @@ export class MapComponent implements OnInit {
   }
 
   getCurrencyCode(countryID: string): string {
-    return countries[countryID].currencies[0];
+    return (<any>countries)[countryID].currencies[0];
   }
 
   openSnackBar(message: string, action: string) {
