@@ -15,6 +15,8 @@ This aplication is used with [Angular](https://angular.io/) with [amcharts](http
 ![pic2](static/pic2.PNG)
   - There you go, you will have a beautiful graphs with summary of statistics. Furthermore, you can customize currency rate by period easily.
 ![pic3](static/pic3.PNG)
+  - You can see nodes chart that represent the different currencies equivalent to 500 euros.
+![pic3](static/pic4.PNG)
 
 ### Further implementation
   - Not only used for exchange rates, but this tool can be used and extended with other topics such as stock market, cryptocurrency market, and anything that can be compared.
