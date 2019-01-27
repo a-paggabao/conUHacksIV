@@ -101,6 +101,9 @@ export class RequestComponent implements OnInit {
       this.resultCurrency = stepCurrency;
       this.zone.runOutsideAngular(() => {
         let chart = am4core.create("chartdiv", am4charts.XYChart);
+        
+        chart.width = am4core.percent(100);
+        chart.height = am4core.percent(100);   
 
         chart.paddingRight = 20;
 
@@ -126,8 +129,8 @@ export class RequestComponent implements OnInit {
         let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
         dateAxis.renderer.grid.template.location = 0;
         dateAxis.tooltip.background.pointerLength = 4;
-        dateAxis.tooltip.background.fillOpacity = 1;
-        dateAxis.tooltip.background.fill = am4core.color("#666666");
+        dateAxis.tooltip.background.fillOpacity = 0;
+        dateAxis.tooltip.background.fill = am4core.color("#000000");
         dateAxis.tooltip.background.stroke = dateAxis.tooltip.background.fill;
 
         let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
@@ -143,11 +146,13 @@ export class RequestComponent implements OnInit {
         series.tooltip.background.fill = am4core.color("white");
         series.propertyFields.stroke = "color";
         chart.cursor = new am4charts.XYCursor();
-
+        
 
         let scrollbarX = new am4charts.XYChartScrollbar();
         scrollbarX.series.push(series);
         chart.scrollbarX = scrollbarX;
+
+        chart.background.opacity = 0;
 
         this.chart = chart;
       });
