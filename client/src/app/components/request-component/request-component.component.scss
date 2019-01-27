@@ -1,13 +1,15 @@
 #chartdiv {
     width: 100%; 
-    height: 100%; 
-    overflow:hidden;
+    height: 65%; 
+    overflow: hidden;
     // background-image: url("../../../assets/img/map.png");
     // background-size: 150%;
 }
 
-img {
-    background-size: 100%;
+.image-back {
+    // size: 100%;
+    z-index: -1;
+    height: 100%;
 }
 
 .disabled {
@@ -16,6 +18,6 @@ img {
     position: relative;
     z-index: -1;
     width: 100%;
-    height: 500px;
+    height: 100%;
     margin: 5rem 0rem;
 }

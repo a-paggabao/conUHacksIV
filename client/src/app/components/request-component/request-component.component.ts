@@ -84,9 +84,9 @@ export class RequestComponent implements OnInit {
           });
 
           if (this.resultCurrency[i][1] >= 1.5) {
-            data[i].color = am4core.color("#3f2698");
+            data[i].color = am4core.color("#7d997f");
           } else {
-            data[i].color = am4core.color("#84279a");
+            data[i].color = am4core.color("#6b8ea5");
           }
         }
         data.sort(

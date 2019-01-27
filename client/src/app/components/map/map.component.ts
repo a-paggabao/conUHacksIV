@@ -47,7 +47,8 @@ export class MapComponent implements OnInit {
       polygonTemplate.tooltipText = "{name}";
       polygonTemplate.strokeWidth = 0.5;
       polygonTemplate.strokeOpacity = 0.5;
-      polygonTemplate.fill = chart.colors.getIndex(0);
+      polygonTemplate.stroke = am4core.color("#ffffff");
+      polygonTemplate.fill = am4core.color("#747d8c");
 
       let lastSelected;
       function fade(element) {
@@ -70,7 +71,11 @@ export class MapComponent implements OnInit {
         if(!SUPPORTED_CURRENCIES.includes(currencyID) ) {
           // alert("country not supported");
           console.log(currencyID);
-          this.openSnackBar("country not supported yet...", "OK");
+          chart.closeAllPopups();
+          let pu = chart.openPopup(ev.target.dataItem.dataContext["name"] + " is not supported yet...</strong>");
+          pu.events.on("closed", ev => {
+            chart.removeDispose;
+          });
           return;
         }
         console.log("here")
@@ -93,10 +98,10 @@ export class MapComponent implements OnInit {
 
       /* Create selected and hover states and set alternative fill color */
       let ss = polygonTemplate.states.create("active");
-      ss.properties.fill = chart.colors.getIndex(5).brighten(-0.5);
+      ss.properties.fill = am4core.color("#6b8ea5").brighten(-0.5);
 
       let hs = polygonTemplate.states.create("hover");
-      hs.properties.fill = chart.colors.getIndex(0).brighten(-0.5);
+      hs.properties.fill = am4core.color("#7d997f").brighten(-0.5);
 
       // Hide Antarctica
       polygonSeries.exclude = ["AQ"];
