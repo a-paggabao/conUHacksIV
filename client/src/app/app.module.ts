@@ -1,4 +1,3 @@
-import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import {
   MatToolbarModule,
   MatIconModule,
@@ -33,7 +32,6 @@ import { RequestComponent } from './components/request-component/request-compone
     ...D3_DIRECTIVES,
     BaseCurrencyComponent,
     AppComponent,
-    DashboardComponent,
     MapComponent,
     RequestComponent,
     ...SHARED_VISUALS,

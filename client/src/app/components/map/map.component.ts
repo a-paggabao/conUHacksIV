@@ -69,20 +69,16 @@ export class MapComponent implements OnInit {
 
         if(!SUPPORTED_CURRENCIES.includes(currencyID) ) {
           // alert("country not supported");
-          console.log(currencyID);
           this.openSnackBar("country not supported yet...", "OK");
           return;
         }
-        console.log("here")
         if (lastSelected) {
           lastSelected.isActive = false;
         }
         // ev.target.series.chart.zoomToMapObject(ev.target);
         this.formValues.push(currencyID);
         this.valueSelected = true;
-        console.log(this.valueSelected);
         if (this.formValues.length === 2) {
-          console.log(this.formValues);
           this.zone.run(() => this.route.navigate([`linechart/${this.formValues[0]}/${this.formValues[1]}`]));
         }
 
@@ -110,6 +106,7 @@ export class MapComponent implements OnInit {
       });
 
       homeButton.icon = new am4core.Sprite();
+      homeButton.icon.fill = am4core.color("#ffffff");
       homeButton.padding(7, 5, 7, 5);
       homeButton.width = 20;
       homeButton.icon.path =
