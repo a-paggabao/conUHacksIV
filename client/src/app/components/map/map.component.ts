@@ -7,6 +7,7 @@ import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
 import { Router } from "@angular/router";
 import { currencies, countries } from "country-data";
 import { MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { SUPPORTED_CURRENCIES } from 'src/app/supportedcurrencies.model';
 
 am4core.useTheme(am4themes_animated);
 
@@ -21,7 +22,7 @@ export class MapComponent implements OnInit {
   formValues: string[] = [];
   valueSelected = false;
 
-  constructor(private zone: NgZone, private route: Router, public dialog: MatDialog) {}
+  constructor(private zone: NgZone, private route: Router, public snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.zone.runOutsideAngular(async () => {
@@ -64,11 +65,20 @@ export class MapComponent implements OnInit {
 
       polygonTemplate.events.on("hit", ev => {
         let countryID = ev.target.dataItem.dataContext["id"];
+        let currencyID = this.getCurrencyCode(countryID);
+
+        if(!SUPPORTED_CURRENCIES.includes(currencyID) ) {
+          // alert("country not supported");
+          console.log(currencyID);
+          this.openSnackBar("country not supported yet...", "OK");
+          return;
+        }
+        console.log("here")
         if (lastSelected) {
           lastSelected.isActive = false;
         }
         // ev.target.series.chart.zoomToMapObject(ev.target);
-        this.formValues.push(this.getCurrencyCode(countryID));
+        this.formValues.push(currencyID);
         this.valueSelected = true;
         console.log(this.valueSelected);
         if (this.formValues.length === 2) {
@@ -122,5 +132,11 @@ export class MapComponent implements OnInit {
 
   getCurrencyCode(countryID: string): string {
     return countries[countryID].currencies[0];
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 }

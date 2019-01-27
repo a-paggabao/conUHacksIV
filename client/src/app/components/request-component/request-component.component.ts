@@ -5,8 +5,11 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { ActivatedRoute } from "@angular/router";
 import { rgb } from "@amcharts/amcharts4/.internal/core/utils/Colors";
+import am4themes_dark from "@amcharts/amcharts4/themes/amchartsdark"
+import { SUPPORTED_CURRENCIES } from 'src/app/supportedcurrencies.model';
 
 am4core.useTheme(am4themes_animated);
+am4core.useTheme(am4themes_dark);
 
 @Component({
   selector: "app-request-component",
@@ -22,42 +25,7 @@ export class RequestComponent implements OnInit {
   startDate = "";
   resultDate: string[] = [];
   resultCurrency: any[];
-  currencyKeys = [
-    "AUD",
-    "BGN",
-    "BRL",
-    "CAD",
-    "CHF",
-    "CNY",
-    "CZK",
-    "DKK",
-    "EUR",
-    "GBP",
-    "HKD",
-    "HRK",
-    "HUF",
-    "IDR",
-    "ILS",
-    "INR",
-    "ISK",
-    "JPY",
-    "KRW",
-    "MXN",
-    "MYR",
-    "NOK",
-    "NZD",
-    "PHP",
-    "PLN",
-    "PLN",
-    "RON",
-    "RUB",
-    "SEK",
-    "SGD",
-    "THB",
-    "TRY",
-    "USD",
-    "ZAR"
-  ];
+  currencyKeys: string[] = SUPPORTED_CURRENCIES
 
   ngOnDestroy() {
     this.zone.runOutsideAngular(() => {
@@ -127,7 +95,6 @@ export class RequestComponent implements OnInit {
         dateAxis.renderer.grid.template.location = 0;
         dateAxis.tooltip.background.pointerLength = 4;
         dateAxis.tooltip.background.fillOpacity = 1;
-        dateAxis.tooltip.background.fill = am4core.color("#666666");
         dateAxis.tooltip.background.stroke = dateAxis.tooltip.background.fill;
 
         let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
