@@ -1,28 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import APP_CONFIG from '../../app.config';
-import { Node, Link } from '../../d3';  
-import { HttpClient } from '@angular/common/http';
-import { RequestService } from 'src/app/service/request.service';
+import { Component, OnInit } from "@angular/core";
+import APP_CONFIG from "../../app.config";
+import { Injectable } from "@angular/core";
+import { Node, Link } from "../../d3";
+import { HttpClient } from "@angular/common/http";
+import { RequestService } from "src/app/service/request.service";
 
 @Component({
-  selector: 'app-balls',
-  templateUrl: './balls.component.html',
-  styleUrls: ['./balls.component.scss']
+  selector: "app-balls",
+  templateUrl: "./balls.component.html",
+  styleUrls: ["./balls.component.scss"]
 })
-export class BallsComponent implements OnInit{
+@Injectable({ providedIn: "root" })
+export class BallsComponent implements OnInit {
   nodes: Node[] = [];
   links: Link[] = [];
 
   ngOnInit() {
-    let baseCurrency = "EUR"
+    let baseCurrency = "EUR";
     this.service.getCurrentData(baseCurrency).subscribe(data => {
-      console.log(data)
-    })
+      console.log(data);
+    });
   }
 
   constructor(private service: RequestService) {
     const N = APP_CONFIG.N,
-          getIndex = (number:any) => number - 1;
+      getIndex = (number: any) => number - 1;
 
     /** constructing the nodes array */
     for (let i = 1; i <= N; i++) {
@@ -40,5 +42,4 @@ export class BallsComponent implements OnInit{
       }
     }
   }
-
 }

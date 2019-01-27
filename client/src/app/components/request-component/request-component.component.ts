@@ -97,9 +97,9 @@ export class RequestComponent implements OnInit {
           });
 
           if (this.resultCurrency[i][this.valueKey] >= averageData) {
-            data[i].color = am4core.color("#7d997f");
+            data[i].color = am4core.color("#ffea00");
           } else {
-            data[i].color = am4core.color("#6b8ea5");
+            data[i].color = am4core.color("#e89700");
           }
         }
         data.sort(
