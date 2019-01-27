@@ -5,7 +5,6 @@ import * as am4maps from "@amcharts/amcharts4/maps";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
 import { Router } from "@angular/router";
-// import { country, countries, code, codes } from "currency-codes";
 import { currencies, countries } from "country-data";
 
 am4core.useTheme(am4themes_animated);
@@ -17,6 +16,7 @@ am4core.useTheme(am4themes_animated);
 })
 export class MapComponent implements OnInit {
   private chart: am4maps.MapChart;
+  public fade = false;
 
   constructor(private zone: NgZone, private route: Router) {}
 
@@ -49,6 +49,19 @@ export class MapComponent implements OnInit {
       polygonTemplate.fill = chart.colors.getIndex(0);
 
       let lastSelected;
+      function fade(element) {
+        var op = 1;  // initial opacity
+        var timer = setInterval(function () {
+            if (op <= 0.1){
+                clearInterval(timer);
+                element.style.display = 'none';
+            }
+            element.style.opacity = op;
+            element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+            op -= op * 0.1;
+        }, 50);
+    }
+
       polygonTemplate.events.on("hit", ev => {
         let countryID = ev.target.dataItem.dataContext["id"];
         console.log(this.getCurrencyCode(countryID))
@@ -56,7 +69,8 @@ export class MapComponent implements OnInit {
           lastSelected.isActive = false;
         }
         // ev.target.series.chart.zoomToMapObject(ev.target);
-        // this.route.navigate(["balls"]);
+        // this.zone.run(() => this.route.navigate(['balls']));
+
         if (lastSelected !== ev.target) {
           lastSelected = ev.target;
         }
