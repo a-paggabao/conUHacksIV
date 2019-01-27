@@ -29,6 +29,7 @@ export class RequestComponent implements OnInit {
   rowData = [];
   columnDefs = [];
   currencyKeys: string[] = SUPPORTED_CURRENCIES
+  valueKey = 0;
 
   ngOnDestroy() {
     this.zone.runOutsideAngular(() => {
@@ -53,6 +54,9 @@ export class RequestComponent implements OnInit {
 
   getChart() {
     this.request.baseCurrency = this.baseCurrencyCode;
+    if (this.currencyKeys.indexOf(this.compCurrencyCode)){
+        this.valueKey = this.currencyKeys.indexOf(this.compCurrencyCode);
+    }
     this.request.startDate = "2009-11-01";
     this.request.getData().subscribe(data => {
       console.log(data);
@@ -79,14 +83,20 @@ export class RequestComponent implements OnInit {
         chart.paddingRight = 20;
 
         let data = [];
+        const average = arr => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
+        let sum =0;
+        for (let i = 0; i < this.resultDate.length; i++) {
+            sum += this.resultCurrency[i][this.valueKey];
+        }
+        let averageData = sum/this.resultDate.length;
         for (let i = 0; i < this.resultDate.length; i++) {
           data.push({
             date: this.resultDate[i],
             name: "name" + i,
-            value: this.resultCurrency[i][1]
+            value: this.resultCurrency[i][this.valueKey]
           });
 
-          if (this.resultCurrency[i][1] >= 1.5) {
+          if (this.resultCurrency[i][this.valueKey] >= averageData) {
             data[i].color = am4core.color("#3f2698");
           } else {
             data[i].color = am4core.color("#84279a");
@@ -134,7 +144,7 @@ export class RequestComponent implements OnInit {
     
         ];
         let mappedData = data.map(x => parseFloat(x.value));
-        const average = arr => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
+
         this.rowData = [
             { row: 'Highest', thirty: Math.max.apply(null, mappedData.slice(-30)), ninety: Math.max.apply(null, mappedData.slice(-90)), year: Math.max.apply(null, mappedData.slice(-365))},
             { row: 'Lowest', thirty: Math.min.apply(null,mappedData.slice(-30)), ninety: Math.min.apply(null,mappedData.slice(-30)), year: Math.min.apply(null,mappedData.slice(-30))},
