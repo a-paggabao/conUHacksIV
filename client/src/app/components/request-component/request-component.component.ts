@@ -5,9 +5,10 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { ActivatedRoute } from "@angular/router";
 import { rgb } from "@amcharts/amcharts4/.internal/core/utils/Colors";
-import { max } from '@amcharts/amcharts4/.internal/core/utils/Math';
-import am4themes_dark from "@amcharts/amcharts4/themes/amchartsdark"
-import { SUPPORTED_CURRENCIES } from 'src/app/supportedcurrencies.model';
+import { max } from "@amcharts/amcharts4/.internal/core/utils/Math";
+import am4themes_dark from "@amcharts/amcharts4/themes/amchartsdark";
+import { SUPPORTED_CURRENCIES } from "src/app/supportedcurrencies.model";
+import { Grid } from "ag-grid-community";
 
 am4core.useTheme(am4themes_animated);
 am4core.useTheme(am4themes_dark);
@@ -28,8 +29,10 @@ export class RequestComponent implements OnInit {
   resultCurrency: any[];
   rowData = [];
   columnDefs = [];
-  currencyKeys: string[] = SUPPORTED_CURRENCIES
+  currencyKeys: string[] = SUPPORTED_CURRENCIES;
   valueKey = 0;
+  gridApi: any;
+  gridColumnApi: any;
 
   ngOnDestroy() {
     this.zone.runOutsideAngular(() => {
@@ -46,14 +49,16 @@ export class RequestComponent implements OnInit {
 
   ngOnInit() {
     this.baseCurrencyCode = this.activatedRoute.snapshot.paramMap.get("base");
-    this.compCurrencyCode = this.activatedRoute.snapshot.paramMap.get("compared");
+    this.compCurrencyCode = this.activatedRoute.snapshot.paramMap.get(
+      "compared"
+    );
     this.getChart();
   }
 
   getChart() {
     this.request.baseCurrency = this.baseCurrencyCode;
-    if (this.currencyKeys.indexOf(this.compCurrencyCode)){
-        this.valueKey = this.currencyKeys.indexOf(this.compCurrencyCode);
+    if (this.currencyKeys.indexOf(this.compCurrencyCode)) {
+      this.valueKey = this.currencyKeys.indexOf(this.compCurrencyCode);
     }
     this.request.startDate = "2009-11-01";
     this.request.getData().subscribe(data => {
@@ -73,19 +78,19 @@ export class RequestComponent implements OnInit {
       this.resultCurrency = stepCurrency;
       this.zone.runOutsideAngular(() => {
         let chart = am4core.create("chartdiv", am4charts.XYChart);
-        
+
         chart.width = am4core.percent(100);
-        chart.height = am4core.percent(100);   
+        chart.height = am4core.percent(100);
 
         chart.paddingRight = 20;
 
         let data = [];
-        const average = arr => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
-        let sum =0;
+        const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
+        let sum = 0;
         for (let i = 0; i < this.resultDate.length; i++) {
-            sum += this.resultCurrency[i][this.valueKey];
+          sum += this.resultCurrency[i][this.valueKey];
         }
-        let averageData = sum/this.resultDate.length;
+        let averageData = sum / this.resultDate.length;
         for (let i = 0; i < this.resultDate.length; i++) {
           data.push({
             date: this.resultDate[i],
@@ -105,15 +110,15 @@ export class RequestComponent implements OnInit {
         chart.data = data;
 
         let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-        dateAxis.title.text = "Date"
+        dateAxis.title.text = "Date";
         dateAxis.renderer.grid.template.location = 0;
         dateAxis.tooltip.background.pointerLength = 4;
         dateAxis.tooltip.background.fillOpacity = 0;
         dateAxis.tooltip.background.fill = am4core.color("#000000");
         dateAxis.tooltip.background.stroke = dateAxis.tooltip.background.fill;
-        
+
         let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-        valueAxis.title.text = "Currency"
+        valueAxis.title.text = "Currency";
         valueAxis.tooltip.disabled = true;
         valueAxis.renderer.minWidth = 35;
 
@@ -126,7 +131,6 @@ export class RequestComponent implements OnInit {
         series.tooltip.background.fill = am4core.color("white");
         series.propertyFields.stroke = "color";
         chart.cursor = new am4charts.XYCursor();
-        
 
         let scrollbarX = new am4charts.XYChartScrollbar();
         scrollbarX.series.push(series);
@@ -135,24 +139,51 @@ export class RequestComponent implements OnInit {
         chart.background.opacity = 0;
 
         this.chart = chart;
-        this.columnDefs = [
-            {headerName: '', field: 'row' },
-            {headerName: '30 days', field: 'thirty' },
-            {headerName: '90 days', field: 'ninety'},
-            {headerName: '1 year', field: 'year'}
-    
-        ];
+
         let mappedData = data.map(x => parseFloat(x.value));
 
+        this.columnDefs = [
+          { headerName: "", field: "row" },
+          { headerName: "30 days", field: "thirty" },
+          { headerName: "90 days", field: "ninety" },
+          { headerName: "1 year", field: "year" }
+        ];
+
         this.rowData = [
-            { row: 'Highest', thirty: Math.max.apply(null, mappedData.slice(-30)), ninety: Math.max.apply(null, mappedData.slice(-90)), year: Math.max.apply(null, mappedData.slice(-365))},
-            { row: 'Lowest', thirty: Math.min.apply(null,mappedData.slice(-30)), ninety: Math.min.apply(null,mappedData.slice(-30)), year: Math.min.apply(null,mappedData.slice(-30))},
-            { row: 'Average', thirty: average(mappedData.slice(-30)), ninety: average(mappedData.slice(-30)), year: average(mappedData.slice(-30))}
+          {
+            row: "Highest",
+            thirty: parseFloat(Math.max.apply(null, mappedData.slice(-30))).toFixed(6),
+            ninety: parseFloat(Math.max.apply(null, mappedData.slice(-90))).toFixed(6),
+            year: parseFloat(Math.max.apply(null, mappedData.slice(-365))).toFixed(6)
+          },
+          {
+            row: "Lowest",
+            thirty: parseFloat(Math.min.apply(null, mappedData.slice(-30))).toFixed(6),
+            ninety: parseFloat(Math.min.apply(null, mappedData.slice(-30))).toFixed(6),
+            year: parseFloat(Math.min.apply(null, mappedData.slice(-30))).toFixed(6)
+          },
+          {
+            row: "Average",
+            thirty: average(mappedData.slice(-30)).toFixed(6),
+            ninety: average(mappedData.slice(-30)).toFixed(6),
+            year: average(mappedData.slice(-30)).toFixed(6)
+          }
         ];
       });
     });
     this.submitted = true;
 
     this.zone.runOutsideAngular(() => {});
+  }
+
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+
+    this.gridApi.sizeColumnsToFit();
+  }
+
+  onFirstDataRendered(params) {
+    params.api.sizeColumnsToFit();
   }
 }
