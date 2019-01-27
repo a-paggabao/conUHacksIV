@@ -43,7 +43,7 @@ export class BallsComponent implements OnInit {
         ratesArr.push({code: Object.keys(data.rates)[i], value: Object.values(data.rates)[i]})
 
         let amount = 500;
-        console.log(ratesArr[i].code, this.convert(amount, ratesArr[i].value))
+        // console.log(ratesArr[i].code, this.convert(amount, ratesArr[i].value))
       }
 
       // console.log(Object.keys(data.rates).length);
@@ -60,7 +60,7 @@ export class BallsComponent implements OnInit {
       for (let i = 0; i < Object.keys(data.rates).length; i++) {
         let amount = 500;
         this.nodes.push(new Node(this.convert(amount, ratesArr[i].value)));
-        console.log(ratesArr[i].value);
+        // console.log(ratesArr[i].value);
       }
       // for(let key of Object.keys(data.rates)) {
       //   this.nodes.push(new Node(key));
@@ -71,17 +71,19 @@ export class BallsComponent implements OnInit {
         for (let m = 2; i * m <= N; m++) {
           /** increasing connections toll on connecting nodes */
           this.nodes[getIndex(i)].linkCount++;
-          console.log(i,this.nodes[getIndex(i)].linkCount++);
+          // console.log(i,this.nodes[getIndex(i)].linkCount++);
           this.nodes[getIndex(i * m)].linkCount++;
 
           /** connecting the nodes before starting the simulation */
-          this.links.push(new Link(this.nodes[getIndex(i)].id, this.nodes[getIndex(i * m)].id));
+          this.links.push(new Link(this.nodes[getIndex(i)], this.nodes[getIndex(i * m)]));
+
+          // console.log(getIndex(i), this.nodes[getIndex(i)])
         }
       }
     });
   }
 
   convert(amount, next) {
-    return next * amount;
+    return (next * amount).toFixed(2);
   }
 }

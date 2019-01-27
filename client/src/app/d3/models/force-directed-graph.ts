@@ -56,6 +56,8 @@ export class ForceDirectedGraph {
         .id((d:any) => d['id'])
         .strength(FORCES.LINKS)
     );
+
+    
   }
 
   initSimulation(options: any) {
