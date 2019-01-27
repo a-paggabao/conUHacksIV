@@ -5,6 +5,7 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { ActivatedRoute } from "@angular/router";
 import { rgb } from "@amcharts/amcharts4/.internal/core/utils/Colors";
+import { max } from '@amcharts/amcharts4/.internal/core/utils/Math';
 
 am4core.useTheme(am4themes_animated);
 
@@ -58,7 +59,8 @@ export class RequestComponent implements OnInit {
     "USD",
     "ZAR"
   ];
-
+  rowData = [];
+  columnDefs = [];
   ngOnDestroy() {
     this.zone.runOutsideAngular(() => {
       if (this.chart) {
@@ -150,6 +152,20 @@ export class RequestComponent implements OnInit {
         chart.scrollbarX = scrollbarX;
 
         this.chart = chart;
+        this.columnDefs = [
+            {headerName: '', field: 'row' },
+            {headerName: '30 days', field: 'thirty' },
+            {headerName: '90 days', field: 'ninety'},
+            {headerName: '1 year', field: 'year'}
+    
+        ];
+        let mappedData = data.map(x => parseFloat(x.value));
+        const average = arr => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
+        this.rowData = [
+            { row: 'Highest', thirty: Math.max.apply(null, mappedData.slice(-30)), ninety: Math.max.apply(null, mappedData.slice(-90)), year: Math.max.apply(null, mappedData.slice(-365))},
+            { row: 'Lowest', thirty: Math.min.apply(null,mappedData.slice(-30)), ninety: Math.min.apply(null,mappedData.slice(-30)), year: Math.min.apply(null,mappedData.slice(-30))},
+            { row: 'Average', thirty: average(mappedData.slice(-30)), ninety: average(mappedData.slice(-30)), year: average(mappedData.slice(-30))}
+        ];
       });
     });
     this.submitted = true;
