@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import APP_CONFIG from '../../app.config';
-import { Injectable } from '@angular/core';
 import { Node, Link } from '../../d3';  
 
 @Component({
@@ -8,17 +7,18 @@ import { Node, Link } from '../../d3';
   templateUrl: './balls.component.html',
   styleUrls: ['./balls.component.scss']
 })
-@Injectable({providedIn: 'root'})
 export class BallsComponent{
-  nodes: Node[] = [];
+  public nodes: Node[] = [];
   links: Link[] = [];
 
   constructor() {
     const N = APP_CONFIG.N,
-          getIndex = (number:any) => number - 1;
+          getIndex = number => number - 1;
 
+    this.nodes.push(new Node("1"));
+    
     /** constructing the nodes array */
-    for (let i = 1; i <= N; i++) {
+    for (let i = 2; i <= N; i++) {
       this.nodes.push(new Node(i.toString()));
     }
 
