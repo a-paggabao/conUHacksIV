@@ -1,7 +1,6 @@
-
 # Pretty Currency
 
-[![Pretty Currency](static/logo.PNG)](https://pretty-currency.firebaseapp.com/)
+[![Pretty Currency](static/logo.PNG)](https://prettycurrency.tech/)
 
 Pretty Currency is a great data visualization tool for currency exchange rate supporting 34 currencies. 
 This aplication is used with [Angular](https://angular.io/) with [amcharts](https://www.amcharts.com/), [d3](https://d3js.org/), [Angular Material](https://material.angular.io/)
@@ -9,7 +8,7 @@ This aplication is used with [Angular](https://angular.io/) with [amcharts](http
 
 ### Getting started!
 
-  - Simply come to our website https://pretty-currency.firebaseapp.com/
+  - Simply come to our website https://prettycurrency.tech/
   - Choose the base currency.
 ![pic1](static/pic1.PNG)
   - Choose the exchange currency.
