@@ -4,13 +4,8 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { ActivatedRoute } from "@angular/router";
-import { rgb } from "@amcharts/amcharts4/.internal/core/utils/Colors";
-
-import { Grid } from "ag-grid-community";
-import { max } from '@amcharts/amcharts4/.internal/core/utils/Math';
 import am4themes_dark from "@amcharts/amcharts4/themes/amchartsdark"
 import { SUPPORTED_CURRENCIES } from 'src/app/supportedcurrencies.model';
-import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
 
 am4core.useTheme(am4themes_animated);
 am4core.useTheme(am4themes_dark);
@@ -179,14 +174,7 @@ export class RequestComponent implements OnInit {
     this.zone.runOutsideAngular(() => {});
   }
 
-  onGridReady(params) {
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-
-    this.gridApi.sizeColumnsToFit();
-  }
-
-  onFirstDataRendered(params) {
+  onFirstDataRendered(params: any) {
     params.api.sizeColumnsToFit();
   }
 }

@@ -73,8 +73,8 @@ export class MapComponent implements OnInit {
           // alert("country not supported");
           console.log(currencyID);
           chart.closeAllPopups();
-          let pu = chart.openPopup(ev.target.dataItem.dataContext["name"] + " is not supported yet...</strong>");
-          pu.events.on("closed", ev => {
+          let pu: any = chart.openPopup(ev.target.dataItem.dataContext["name"] + " is not supported yet...</strong>");
+          pu.events.on("closed", (ev: any) => {
             chart.removeDispose;
           });
           return;
