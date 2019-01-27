@@ -25,6 +25,7 @@ export class MapComponent implements OnInit {
   constructor(private zone: NgZone, private route: Router, public snackBar: MatSnackBar) {}
 
   ngOnInit() {
+    console.log(countries);
     this.zone.runOutsideAngular(async () => {
       let chart = am4core.create("chartdiv", am4maps.MapChart);
 
