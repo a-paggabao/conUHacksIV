@@ -47,8 +47,6 @@ export class RequestComponent implements OnInit {
   ngOnInit() {
     this.baseCurrencyCode = this.activatedRoute.snapshot.paramMap.get("base");
     this.compCurrencyCode = this.activatedRoute.snapshot.paramMap.get("compared");
-    console.log(this.baseCurrencyCode);
-    console.log(this.compCurrencyCode);
     this.getChart();
   }
 
@@ -59,7 +57,6 @@ export class RequestComponent implements OnInit {
     }
     this.request.startDate = "2009-11-01";
     this.request.getData().subscribe(data => {
-      console.log(data);
       let stepCurrency = new Array(data.rates.length);
       let i = 0;
       for (let key in data.rates) {
@@ -108,13 +105,15 @@ export class RequestComponent implements OnInit {
         chart.data = data;
 
         let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+        dateAxis.title.text = "Date"
         dateAxis.renderer.grid.template.location = 0;
         dateAxis.tooltip.background.pointerLength = 4;
         dateAxis.tooltip.background.fillOpacity = 0;
         dateAxis.tooltip.background.fill = am4core.color("#000000");
         dateAxis.tooltip.background.stroke = dateAxis.tooltip.background.fill;
-
+        
         let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis.title.text = "Currency"
         valueAxis.tooltip.disabled = true;
         valueAxis.renderer.minWidth = 35;
 

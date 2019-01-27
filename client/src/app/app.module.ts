@@ -1,4 +1,3 @@
-import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import {
   MatToolbarModule,
   MatIconModule,
@@ -34,7 +33,6 @@ import { AgGridModule } from 'ag-grid-angular';
     ...D3_DIRECTIVES,
     BaseCurrencyComponent,
     AppComponent,
-    DashboardComponent,
     MapComponent,
     RequestComponent,
     ...SHARED_VISUALS,
