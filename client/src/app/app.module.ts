@@ -1,4 +1,3 @@
-import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import {
   MatToolbarModule,
   MatIconModule,
@@ -23,6 +22,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { RequestComponent } from './components/request-component/request-component.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,6 @@ import { RequestComponent } from './components/request-component/request-compone
     ...D3_DIRECTIVES,
     BaseCurrencyComponent,
     AppComponent,
-    DashboardComponent,
     MapComponent,
     RequestComponent,
     ...SHARED_VISUALS,
@@ -55,7 +54,8 @@ import { RequestComponent } from './components/request-component/request-compone
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    AgGridModule.withComponents([])
   ],
   providers: [D3Service],
   bootstrap: [AppComponent],

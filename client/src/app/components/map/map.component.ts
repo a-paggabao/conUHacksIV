@@ -5,7 +5,7 @@ import * as am4maps from "@amcharts/amcharts4/maps";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
 import { Router } from "@angular/router";
-import { currencies, countries } from "country-data";
+import { countries } from "country-data";
 import { MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { SUPPORTED_CURRENCIES } from 'src/app/supportedcurrencies.model';
 
@@ -25,6 +25,7 @@ export class MapComponent implements OnInit {
   constructor(private zone: NgZone, private route: Router, public snackBar: MatSnackBar) {}
 
   ngOnInit() {
+    console.log(countries);
     this.zone.runOutsideAngular(async () => {
       let chart = am4core.create("chartdiv", am4maps.MapChart);
 
@@ -50,8 +51,8 @@ export class MapComponent implements OnInit {
       polygonTemplate.stroke = am4core.color("#ffffff");
       polygonTemplate.fill = am4core.color("#747d8c");
 
-      let lastSelected;
-      function fade(element) {
+      let lastSelected: any;
+      function fade(element:any) {
         var op = 1; // initial opacity
         var timer = setInterval(function() {
           if (op <= 0.1) {
@@ -65,8 +66,8 @@ export class MapComponent implements OnInit {
       }
 
       polygonTemplate.events.on("hit", ev => {
-        let countryID = ev.target.dataItem.dataContext["id"];
-        let currencyID = this.getCurrencyCode(countryID);
+        let countryID:any = (<any>ev.target.dataItem.dataContext)["id"];
+        let currencyID:any = this.getCurrencyCode(countryID);
 
         if(!SUPPORTED_CURRENCIES.includes(currencyID) ) {
           // alert("country not supported");
@@ -78,16 +79,13 @@ export class MapComponent implements OnInit {
           });
           return;
         }
-        console.log("here")
         if (lastSelected) {
           lastSelected.isActive = false;
         }
         // ev.target.series.chart.zoomToMapObject(ev.target);
         this.formValues.push(currencyID);
         this.valueSelected = true;
-        console.log(this.valueSelected);
         if (this.formValues.length === 2) {
-          console.log(this.formValues);
           this.zone.run(() => this.route.navigate([`linechart/${this.formValues[0]}/${this.formValues[1]}`]));
         }
 
@@ -115,6 +113,7 @@ export class MapComponent implements OnInit {
       });
 
       homeButton.icon = new am4core.Sprite();
+      homeButton.icon.fill = am4core.color("#ffffff");
       homeButton.padding(7, 5, 7, 5);
       homeButton.width = 20;
       homeButton.icon.path =
@@ -136,7 +135,7 @@ export class MapComponent implements OnInit {
   }
 
   getCurrencyCode(countryID: string): string {
-    return countries[countryID].currencies[0];
+    return (<any>countries)[countryID].currencies[0];
   }
 
   openSnackBar(message: string, action: string) {
