@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import APP_CONFIG from '../../app.config';
+import { Injectable } from '@angular/core';
 import { Node, Link } from '../../d3';  
 
 @Component({
@@ -7,6 +8,7 @@ import { Node, Link } from '../../d3';
   templateUrl: './balls.component.html',
   styleUrls: ['./balls.component.scss']
 })
+@Injectable({providedIn: 'root'})
 export class BallsComponent{
   nodes: Node[] = [];
   links: Link[] = [];
