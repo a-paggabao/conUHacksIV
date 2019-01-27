@@ -4,9 +4,9 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import * as am4maps from "@amcharts/amcharts4/maps";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
-import am4themes_dark from "@amcharts/amcharts4/themes/dark";
-import { Router } from '@angular/router';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
+import { Router } from "@angular/router";
+// import { country, countries, code, codes } from "currency-codes";
+import { currencies, countries } from "country-data";
 
 am4core.useTheme(am4themes_animated);
 
@@ -20,7 +20,8 @@ export class MapComponent implements OnInit {
 
   constructor(private zone: NgZone, private route: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   ngAfterViewInit() {
     this.zone.runOutsideAngular(() => {
@@ -49,13 +50,13 @@ export class MapComponent implements OnInit {
 
       let lastSelected;
       polygonTemplate.events.on("hit", ev => {
-        console.log(ev.target.dataItem.dataContext)
-        // console.log(chart.dataFields)
+        let countryID = ev.target.dataItem.dataContext["id"];
+        console.log(this.getCurrencyCode(countryID))
         if (lastSelected) {
           lastSelected.isActive = false;
         }
         // ev.target.series.chart.zoomToMapObject(ev.target);
-        this.route.navigate(['balls'])
+        // this.route.navigate(["balls"]);
         if (lastSelected !== ev.target) {
           lastSelected = ev.target;
         }
@@ -87,7 +88,6 @@ export class MapComponent implements OnInit {
       homeButton.marginBottom = 10;
       homeButton.parent = chart.zoomControl;
       homeButton.insertBefore(chart.zoomControl.plusButton);
-      
 
       this.chart = chart;
     });
@@ -99,5 +99,9 @@ export class MapComponent implements OnInit {
         this.chart.dispose();
       }
     });
+  }
+
+  getCurrencyCode(countryID: string): string {
+    return countries[countryID].currencies[0]
   }
 }
