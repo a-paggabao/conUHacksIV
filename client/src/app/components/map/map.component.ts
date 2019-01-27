@@ -5,6 +5,8 @@ import * as am4maps from "@amcharts/amcharts4/maps";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
 import am4themes_dark from "@amcharts/amcharts4/themes/dark";
+import { Router } from '@angular/router';
+import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 am4core.useTheme(am4themes_animated);
 
@@ -17,7 +19,7 @@ export class MapComponent implements OnInit {
   private chart: am4maps.MapChart;
   public fade = false;
 
-  constructor(private zone: NgZone) {}
+  constructor(private zone: NgZone, private route: Router) {}
 
   ngOnInit() {}
 
@@ -45,6 +47,7 @@ export class MapComponent implements OnInit {
       polygonTemplate.strokeWidth = 0.5;
       polygonTemplate.strokeOpacity = 0.5;
       polygonTemplate.fill = chart.colors.getIndex(0);
+
       let lastSelected;
       function fade(element) {
         var op = 1;  // initial opacity
@@ -60,15 +63,13 @@ export class MapComponent implements OnInit {
     }
 
       polygonTemplate.events.on("hit", ev => {
-        console.log("clicked");
+        console.log(ev.target.dataItem.dataContext)
+        // console.log(chart.dataFields)
         if (lastSelected) {
           lastSelected.isActive = false;
         }
         // ev.target.series.chart.zoomToMapObject(ev.target);
-        ev.target.series.chart.toBack();
-        // ev.target.series.chart.vi
-
-
+        this.route.navigate(['balls'])
         if (lastSelected !== ev.target) {
           lastSelected = ev.target;
         }
@@ -100,6 +101,7 @@ export class MapComponent implements OnInit {
       homeButton.marginBottom = 10;
       homeButton.parent = chart.zoomControl;
       homeButton.insertBefore(chart.zoomControl.plusButton);
+      
 
       this.chart = chart;
     });
