@@ -17,4 +17,10 @@ export class RequestService {
     return this.http.get(
       'https://api.exchangeratesapi.io/history?start_at='+this.startDate+'&end_at='+this.todayDate+'&base='+this.baseCurrency);
   };
+
+  getCurrentData(base: String): Observable<any> {
+    return this.http.get(
+      `https://api.exchangeratesapi.io/latest/${base}`
+    )
+  }
 }

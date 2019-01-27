@@ -1,17 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import APP_CONFIG from '../../app.config';
 import { Node, Link } from '../../d3';  
+import { HttpClient } from '@angular/common/http';
+import { RequestService } from 'src/app/service/request.service';
 
 @Component({
   selector: 'app-balls',
   templateUrl: './balls.component.html',
   styleUrls: ['./balls.component.scss']
 })
-export class BallsComponent{
+export class BallsComponent implements OnInit{
   nodes: Node[] = [];
   links: Link[] = [];
 
-  constructor() {
+  ngOnInit() {
+    let baseCurrency = "EUR"
+    this.service.getCurrentData(baseCurrency).subscribe(data => {
+      console.log(data)
+    })
+  }
+
+  constructor(private service: RequestService) {
     const N = APP_CONFIG.N,
           getIndex = (number:any) => number - 1;
 
