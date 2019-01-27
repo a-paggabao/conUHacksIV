@@ -18,9 +18,11 @@
     </form>
 </div> -->
 <div id="chartdiv" style="width: 100%; height: 500px" [hidden]=!submitted></div>
+<br>
+<h2 style="color:white; text-align: center;">Statistics</h2>
 <ag-grid-angular 
-    style="width: 100%; height: 250px;" 
-    class="ag-theme-balham ag-row-hover"
+    style="width: 100%; height: 250px; color: white; text-align: center;" 
+    class="ag-theme-balham-dark ag-row-hover"
     [rowData]="rowData" 
     [columnDefs]="columnDefs"
     [hidden]=!submitted>
