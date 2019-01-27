@@ -15,6 +15,7 @@ am4core.useTheme(am4themes_animated);
 })
 export class MapComponent implements OnInit {
   private chart: am4maps.MapChart;
+  public fade = false;
 
   constructor(private zone: NgZone) {}
 
@@ -45,12 +46,29 @@ export class MapComponent implements OnInit {
       polygonTemplate.strokeOpacity = 0.5;
       polygonTemplate.fill = chart.colors.getIndex(0);
       let lastSelected;
+      function fade(element) {
+        var op = 1;  // initial opacity
+        var timer = setInterval(function () {
+            if (op <= 0.1){
+                clearInterval(timer);
+                element.style.display = 'none';
+            }
+            element.style.opacity = op;
+            element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+            op -= op * 0.1;
+        }, 50);
+    }
+
       polygonTemplate.events.on("hit", ev => {
-        console.log(ev.target)
+        console.log("clicked");
         if (lastSelected) {
           lastSelected.isActive = false;
         }
-        ev.target.series.chart.zoomToMapObject(ev.target);
+        // ev.target.series.chart.zoomToMapObject(ev.target);
+        ev.target.series.chart.toBack();
+        // ev.target.series.chart.vi
+
+
         if (lastSelected !== ev.target) {
           lastSelected = ev.target;
         }
