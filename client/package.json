@@ -23,6 +23,7 @@
     "@angular/platform-browser": "~7.2.0",
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
+    "@types/country-data": "0.0.0",
     "@types/jest": "^23.3.13",
     "ag-grid-angular": "^20.0.0",
     "ag-grid-community": "^20.0.0",

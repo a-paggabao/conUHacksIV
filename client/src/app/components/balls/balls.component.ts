@@ -13,11 +13,11 @@ export class BallsComponent{
 
   constructor() {
     const N = APP_CONFIG.N,
-          getIndex = number => number - 1;
+          getIndex = (number:any) => number - 1;
 
     /** constructing the nodes array */
     for (let i = 1; i <= N; i++) {
-      this.nodes.push(new Node(i));
+      this.nodes.push(new Node(i.toString()));
     }
 
     for (let i = 1; i <= N; i++) {

@@ -10,8 +10,8 @@ export class D3Service {
   constructor() { }
 
   /** A method to bind a pan and zoom behaviour to an svg element */
-  applyZoomableBehaviour(svgElement, containerElement) {
-    let svg, container, zoomed, zoom;
+  applyZoomableBehaviour(svgElement: any, containerElement:any) {
+    let svg:any, container:any, zoomed:any, zoom:any;
 
     svg = d3.select(svgElement);
     container = d3.select(containerElement);
@@ -26,7 +26,7 @@ export class D3Service {
   }
 
   /** A method to bind a draggable behaviour to an svg element */
-  applyDraggableBehaviour(element, node: Node, graph: ForceDirectedGraph) {
+  applyDraggableBehaviour(element:any, node: Node, graph: ForceDirectedGraph) {
     const d3element = d3.select(element);
 
     function started() {
@@ -61,7 +61,7 @@ export class D3Service {
   /** The interactable graph we will simulate in this article
   * This method does not interact with the document, purely physical calculations with d3
   */
-  getForceDirectedGraph(nodes: Node[], links: Link[], options: { width, height }) {
+  getForceDirectedGraph(nodes: Node[], links: Link[], options: { width:any, height:any }) {
     const sg = new ForceDirectedGraph(nodes, links, options);
     return sg;
   }

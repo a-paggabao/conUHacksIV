@@ -8,6 +8,7 @@ import { rgb } from "@amcharts/amcharts4/.internal/core/utils/Colors";
 import { max } from '@amcharts/amcharts4/.internal/core/utils/Math';
 import am4themes_dark from "@amcharts/amcharts4/themes/amchartsdark"
 import { SUPPORTED_CURRENCIES } from 'src/app/supportedcurrencies.model';
+import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
 
 am4core.useTheme(am4themes_animated);
 am4core.useTheme(am4themes_dark);
@@ -26,8 +27,8 @@ export class RequestComponent implements OnInit {
   startDate = "";
   resultDate: string[] = [];
   resultCurrency: any[];
-  rowData = [];
-  columnDefs = [];
+  rowData: any[]=[];
+  columnDefs: any[]=[];
   currencyKeys: string[] = SUPPORTED_CURRENCIES
   valueKey = 0;
 
@@ -79,8 +80,8 @@ export class RequestComponent implements OnInit {
 
         chart.paddingRight = 20;
 
-        let data = [];
-        const average = arr => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
+        let data: any[]=[];
+        const average = (arr:any) => arr.reduce( ( p:any, c:any ) => p + c, 0 ) / arr.length;
         let sum =0;
         for (let i = 0; i < this.resultDate.length; i++) {
             sum += this.resultCurrency[i][this.valueKey];

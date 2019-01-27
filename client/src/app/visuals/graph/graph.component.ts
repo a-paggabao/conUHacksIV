@@ -16,13 +16,13 @@ import { D3Service, ForceDirectedGraph, Node } from '../../d3';
   styleUrls: ['./graph.component.css']
 })
 export class GraphComponent implements OnInit, AfterViewInit {
-  @Input('nodes') nodes;
-  @Input('links') links;
+  @Input('nodes') nodes:any;
+  @Input('links') links:any;
   graph: ForceDirectedGraph;
-  private _options: { width, height } = { width: 800, height: 600 };
+  private _options: { width:any, height:any } = { width: 800, height: 600 };
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  onResize(event:any) {
     this.graph.initSimulation(this.options);
   }
 
@@ -38,7 +38,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
      * This improves scripting computation duration in a couple of tests I've made, consistently.
      * Also, it makes sense to avoid unnecessary checks when we are dealing only with simulations data binding.
      */
-    this.graph.ticker.subscribe((d) => {
+    this.graph.ticker.subscribe((d:any) => {
       this.ref.markForCheck();
     });
   }

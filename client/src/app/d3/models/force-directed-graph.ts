@@ -16,14 +16,14 @@ export class ForceDirectedGraph {
   public nodes: Node[] = [];
   public links: Link[] = [];
 
-  constructor(nodes, links, options: { width, height }) {
+  constructor(nodes: Node[], links: Link[], options: { width: any, height: any }) {
     this.nodes = nodes;
     this.links = links;
 
     this.initSimulation(options);
   }
 
-  connectNodes(source, target) {
+  connectNodes(source: any, target: any) {
     let link;
 
     if (!this.nodes[source] || !this.nodes[target]) {
@@ -53,12 +53,12 @@ export class ForceDirectedGraph {
 
     this.simulation.force('links',
       d3.forceLink(this.links)
-        .id(d => d['id'])
+        .id((d:any) => d['id'])
         .strength(FORCES.LINKS)
     );
   }
 
-  initSimulation(options) {
+  initSimulation(options: any) {
     if (!options || !options.width || !options.height) {
       throw new Error('missing options when initializing simulation');
     }
@@ -70,12 +70,12 @@ export class ForceDirectedGraph {
       this.simulation = d3.forceSimulation()
         .force('charge',
           d3.forceManyBody()
-            .strength(d => FORCES.CHARGE * d['r'])
+            .strength((d:any) => FORCES.CHARGE * d['r'])
         )
         .force('collide',
           d3.forceCollide()
             .strength(FORCES.COLLISION)
-            .radius(d => d['r'] + 5).iterations(2)
+            .radius((d:any) => d['r'] + 5).iterations(2)
         );
 
       // Connecting the d3 ticker to an angular event emitter
