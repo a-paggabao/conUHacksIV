@@ -5,6 +5,7 @@ import { Node, Link } from "../../d3";
 import { HttpClient } from "@angular/common/http";
 import { RequestService } from "src/app/service/request.service";
 import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
+import { SUPPORTED_CURRENCIES } from "src/app/supportedcurrencies.model";
 
 @Component({
   selector: "app-balls",
@@ -13,49 +14,68 @@ import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
 })
 @Injectable({ providedIn: "root" })
 export class BallsComponent implements OnInit {
-  public theNodes = [];
-  public theLinks = [];
+  nodes: Node[] = [];
+  links: Link[] = [];
+  data;
+
   ngOnInit() {
-  }
-  constructor(private service: RequestService) {
-    let keys: any[] = [];
-    let nodes: Node[] = [];
-    let links: Link[] = [];
-    let masterData: any[]=[];
-    let baseCurrency = "EUR";
-    
-    this.service.getCurrentData(baseCurrency).subscribe(data => {
-      console.log(data);
-   
-      const N = APP_CONFIG.N,
-        getIndex = (number: any) => number - 1;
+    let base = "EUR"
+    this.service.getCurrentData(base).subscribe(data => {
+      let ratesArr = new Array();
+      for (let i = 0; i < Object.keys(data.rates).length; i++) {
+        ratesArr.push({code: Object.keys(data.rates)[i], value: Object.values(data.rates)[i]})
 
-      for(let key in data.rates){
-        keys.push(key);
-        // console.log(data["rates"].key.toString());
-        nodes.push(new Node(data.rates.key));
+        let amount = 500;
+        console.log(ratesArr[i].code, this.convert(amount, ratesArr[i].value))
       }
-      
-      /** constructing the nodes array */
-      // for (let i = 1; i <= 33; i++) {
-      //   nodes.push(new Node(data[i].toString()));
-      //   console.log("2");
-      // }
-      console.log(nodes);
+      console.log(ratesArr)
+    });
+  }
 
-      for (let i = 1; i <= 33; i++) {
-        for (let m = 2; i * m <= 33; m++) {
+  // async getData(baseCurrency) {
+  //   return await this.service.getCurrentData(baseCurrency).subscribe(data => {
+  //     return data;
+  //   });
+  // }
+
+  constructor(private service: RequestService) {
+    let baseCurrency = "EUR";
+
+    this.service.getCurrentData(baseCurrency).subscribe(data => {
+      console.log(data.rates);
+
+      console.log(Object.keys(data.rates).length);
+      // const N = APP_CONFIG.N,
+      // getIndex = (number: any) => number - 1;
+      const N = Object.keys(data.rates).length,
+        getIndex = (number: any) => number - 1;
+      console.log(N);
+
+      // this.nodes.push(new Node(SUPPORTED_CURRENCIES.indexOf(data.)));
+      this.nodes.push(new Node("1"));
+
+      /** constructing the nodes array */
+      console.log("here");
+      for (let i = 2; i <= N; i++) {}
+      // for(let key of Object.keys(data.rates)) {
+      //   this.nodes.push(new Node(key));
+      //   console.log(key)
+      // }
+
+      for (let i = 1; i <= N; i++) {
+        for (let m = 2; i * m <= N; m++) {
           /** increasing connections toll on connecting nodes */
-          nodes[i].linkCount++;
-          nodes[i * m].linkCount++;
+          // this.nodes[getIndex(i)].linkCount++;
+          // this.nodes[getIndex(i * m)].linkCount++;
 
           /** connecting the nodes before starting the simulation */
-          links.push(new Link(i, i * m));
+          this.links.push(new Link(i, i * m));
         }
       }
     });
+  }
 
-    this.theNodes = nodes;
-    this.theLinks = links;
+  convert(amount, next) {
+    return next * amount;
   }
 }
