@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { GraphComponent } from './visuals/graph/graph.component';
 import { SHARED_VISUALS } from './visuals/shared';
 import { AppRoutingModule } from './app-routing.module';
-import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { RequestComponent } from './components/request-component/request-component.component';
@@ -15,7 +14,6 @@ import { RequestComponent } from './components/request-component/request-compone
   declarations: [
     AppComponent,
     GraphComponent,
-    NavBarComponent,
     RequestComponent,
     ...SHARED_VISUALS,
     ...D3_DIRECTIVES,
