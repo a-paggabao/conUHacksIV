@@ -69,7 +69,8 @@ export class MapComponent implements OnInit {
           lastSelected.isActive = false;
         }
         // ev.target.series.chart.zoomToMapObject(ev.target);
-        this.route.navigate(['balls'])
+        this.zone.run(() => this.route.navigate(['balls']));
+
         if (lastSelected !== ev.target) {
           lastSelected = ev.target;
         }
