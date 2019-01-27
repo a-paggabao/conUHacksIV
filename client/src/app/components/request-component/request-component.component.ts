@@ -56,7 +56,7 @@ export class RequestComponent implements OnInit {
                     let chart = am4core.create("chartdiv", am4charts.XYChart);
               
                     chart.paddingRight = 20;
-              
+
                     let data = [];
                     for (let i = 0; i < this.resultDate.length; i++) {
                       data.push({ date: this.resultDate[i], name: "name" + i, value: this.resultCurrency[i][1] });
