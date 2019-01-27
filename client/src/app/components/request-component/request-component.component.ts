@@ -3,6 +3,7 @@ import { OnInit, Component, NgZone } from '@angular/core';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+import { rgb } from '@amcharts/amcharts4/.internal/core/utils/Colors';
 
 am4core.useTheme(am4themes_animated);
 
@@ -60,6 +61,13 @@ export class RequestComponent implements OnInit {
                     let data = [];
                     for (let i = 0; i < this.resultDate.length; i++) {
                       data.push({ date: this.resultDate[i], name: "name" + i, value: this.resultCurrency[i][1] });
+
+                        if (this.resultCurrency[i][1] >= 1.5){ 
+                            data[i].color = am4core.color("#3f2698");
+                        }
+                        else{
+                            data[i].color = am4core.color("#84279a");
+                        }
                     }
                     data.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
                     chart.data = data;
@@ -74,10 +82,13 @@ export class RequestComponent implements OnInit {
                     let series = chart.series.push(new am4charts.LineSeries());
                     series.dataFields.dateX = "date";
                     series.dataFields.valueY = "value";
-              
+                    series.strokeWidth = 1;
                     series.tooltipText = "{valueY.value}";
+                    series.tooltip.background.fillOpacity = 0.3;
+                    series.tooltip.background.fill = am4core.color("white");
+                    series.propertyFields.stroke = "color";
                     chart.cursor = new am4charts.XYCursor();
-              
+
                     let scrollbarX = new am4charts.XYChartScrollbar();
                     scrollbarX.series.push(series);
                     chart.scrollbarX = scrollbarX;
