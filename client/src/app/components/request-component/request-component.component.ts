@@ -3,6 +3,7 @@ import { OnInit, Component, NgZone } from '@angular/core';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+import { ActivatedRoute } from '@angular/router';
 import { rgb } from '@amcharts/amcharts4/.internal/core/utils/Colors';
 
 am4core.useTheme(am4themes_animated);
@@ -15,6 +16,8 @@ am4core.useTheme(am4themes_animated);
 export class RequestComponent implements OnInit {
     private chart: am4charts.XYChart;
     submitted = false;
+    baseCurrencyCode: string;
+    compCurrencyCode: string;
     name = '';
     startDate = '';
     resultDate: string[] = [];
@@ -29,16 +32,22 @@ export class RequestComponent implements OnInit {
         }
       });
     }
-    constructor(private request:RequestService, private zone: NgZone) { }
+    constructor(private request:RequestService, private zone: NgZone, private activatedRoute: ActivatedRoute) { }
 
     ngOnInit() {
+        this.baseCurrencyCode = this.activatedRoute.snapshot.paramMap.get('base');
+        this.compCurrencyCode = this.activatedRoute.snapshot.paramMap.get('compared');
+        console.log(this.baseCurrencyCode)
+        console.log(this.compCurrencyCode)
+        this.getChart();
     }
 
-    onSubmit() {
-        this.request.baseCurrency = this.name;
-        this.request.startDate = this.startDate;
+    getChart() {
+        this.request.baseCurrency = this.baseCurrencyCode;
+        this.request.startDate = '2009-11-01';
         this.request.getData().subscribe(
             data => {
+                console.log(data)
                 let stepCurrency = new Array(data.rates.length)
                 let i = 0;
                 for(let key in data.rates){

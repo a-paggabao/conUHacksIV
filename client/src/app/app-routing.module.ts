@@ -9,7 +9,7 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
   {path: 'map', component: MapComponent},
   {path: 'balls', component: BallsComponent},
-  {path: 'request', component: RequestComponent},
+  {path: 'linechart/:base/:compared', component: RequestComponent},
   {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
 ];
 
