@@ -1,3 +1,4 @@
+
 # Pretty Currency
 
 [![Pretty Currency](static/logo.PNG)](https://pretty-currency.firebaseapp.com/)
@@ -21,3 +22,4 @@ This aplication is used with [Angular](https://angular.io/) with [amcharts](http
   - Implement various types of data visualization. 
   - Export with PDF, CSV, JSON etc.. / import dataset using with this application.
   - Train data to predict general anticipation of future graphs.
+

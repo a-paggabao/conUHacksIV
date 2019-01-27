@@ -10,10 +10,10 @@ export class Node implements d3.SimulationNodeDatum {
   fx?: number | null;
   fy?: number | null;
 
-  id: string;
+  id: string | number;
   linkCount: number = 0;
 
-  constructor(id: string) {
+  constructor(id: string | number) {
     this.id = id;
   }
 
@@ -22,7 +22,7 @@ export class Node implements d3.SimulationNodeDatum {
   }
 
   get r() {
-    return 50 * this.normal() + 10;
+    return 200 * this.normal() + 10;
   }
 
   get fontSize() {
