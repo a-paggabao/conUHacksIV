@@ -20,7 +20,8 @@ export class RequestService {
 
   getCurrentData(base: String): Observable<any> {
     return this.http.get(
-      `https://api.exchangeratesapi.io/latest/${base}`
+      `https://api.exchangeratesapi.io/latest?base=${base}`
+      // `https://api.exchangeratesapi.io/latest`
     )
   }
 }
