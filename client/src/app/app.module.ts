@@ -22,7 +22,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { RequestComponent } from './components/request-component/request-component.component';
-import { AgGridModule } from 'ag-grid-angular';
+import { AgGridModule } from "ag-grid-angular/main";
 
 @NgModule({
   declarations: [
