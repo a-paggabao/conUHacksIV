@@ -15,7 +15,8 @@ import { Node } from '../../../d3';
       <svg:text
           class="node-name"
           [attr.font-size]="node.fontSize">
-        {{node.id}}
+          <tspan y="-0.4%">{{node.id}}</tspan>
+          <tspan x="-0.1cm" y="1.7%">{{node.country}}</tspan>
       </svg:text>
     </svg:g>
   `,

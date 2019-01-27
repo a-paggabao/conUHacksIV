@@ -47,7 +47,7 @@ export class BallsComponent implements OnInit {
       /** constructing the nodes array */
       for (let i = 0; i < Object.keys(data.rates).length; i++) {
         let amount = 500;
-        this.nodes.push(new Node(this.convert(amount, ratesArr[i].value)));
+        this.nodes.push(new Node(this.convert(amount, ratesArr[i].value), ratesArr[i].code));
       }
 
       for (let i = 1; i <= N; i++) {
