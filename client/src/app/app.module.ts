@@ -5,7 +5,8 @@ import {
   MatSidenavModule,
   MatDatepickerModule,
   MatFormFieldModule,
-  MatButtonModule
+  MatButtonModule,
+  MatSnackBarModule
 } from "@angular/material";
 import { MapComponent } from "./components/map/map.component";
 import { MatCardModule } from "@angular/material";
@@ -54,8 +55,9 @@ import { RequestComponent } from './components/request-component/request-compone
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MatSnackBarModule
   ],
   providers: [D3Service],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
