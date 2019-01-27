@@ -15,11 +15,12 @@ export class RequestComponent implements OnInit {
     private chart: am4charts.XYChart;
     submitted = false;
     name = '';
-    startDate = '';
+    exchangeCurrency = '';
     resultDate: string[] = [];
     resultCurrency: any[];
     currencyKeys = ['AUD','BGN','BRL','CAD','CHF','CNY','CZK','DKK','EUR','GBP','HKD','HRK','HUF','IDR','ILS','INR','ISK','JPY','KRW',
                     'MXN','MYR','NOK','NZD','PHP','PLN','PLN','RON','RUB','SEK','SGD','THB','TRY','USD','ZAR']
+    keyValue = 0;
 
     ngOnDestroy() {
       this.zone.runOutsideAngular(() => {
@@ -35,7 +36,11 @@ export class RequestComponent implements OnInit {
 
     onSubmit() {
         this.request.baseCurrency = this.name;
-        this.request.startDate = this.startDate;
+        for (var val in this.currencyKeys) {
+            if (this.currencyKeys[val] == this.exchangeCurrency){
+                this.keyValue = parseInt(val, 10);
+            }
+        }
         this.request.getData().subscribe(
             data => {
                 let stepCurrency = new Array(data.rates.length)
@@ -59,7 +64,7 @@ export class RequestComponent implements OnInit {
 
                     let data = [];
                     for (let i = 0; i < this.resultDate.length; i++) {
-                      data.push({ date: this.resultDate[i], name: "name" + i, value: this.resultCurrency[i][1] });
+                      data.push({ date: this.resultDate[i], name: "name" + i, value: this.resultCurrency[i][this.keyValue] });
                     }
                     data.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
                     chart.data = data;

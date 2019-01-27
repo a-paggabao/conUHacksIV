@@ -7,9 +7,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RequestService {
-  @Input() startDate: string;
   @Input() baseCurrency: string;
   todayDate = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+  now = new Date();
+  startDate = formatDate(new Date(this.now).setFullYear(this.now.getFullYear() - 5),'yyyy-MM-dd', 'en');
   constructor(private http: HttpClient) {
   }
   getData(): Observable<any> {

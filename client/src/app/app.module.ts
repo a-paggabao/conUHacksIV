@@ -1,3 +1,16 @@
+import { DashboardComponent } from "./components/dashboard/dashboard.component";
+import {
+  MatToolbarModule,
+  MatIconModule,
+  MatSidenavModule,
+  MatDatepickerModule,
+  MatFormFieldModule,
+  MatButtonModule
+} from "@angular/material";
+import { MapComponent } from "./components/map/map.component";
+import { MatCardModule } from "@angular/material";
+import { BallsComponent } from "./components/balls/balls.component";
+import { BaseCurrencyComponent } from "./components/base-currency/base-currency.component";
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -14,13 +27,30 @@ import { RequestComponent } from './components/request-component/request-compone
   declarations: [
     AppComponent,
     GraphComponent,
+    BallsComponent,
+    ...SHARED_VISUALS,
+    ...D3_DIRECTIVES,
+    BaseCurrencyComponent,
+    AppComponent,
+    DashboardComponent,
+    MapComponent,
     RequestComponent,
     ...SHARED_VISUALS,
     ...D3_DIRECTIVES,
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatSidenavModule,
     FormsModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    HttpClientModule,
+    MatCardModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -28,4 +58,4 @@ import { RequestComponent } from './components/request-component/request-compone
   providers: [D3Service],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
